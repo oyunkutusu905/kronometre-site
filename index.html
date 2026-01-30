@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Oyun Kutusu – Kronometre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  background:#0f172a;
+  color:white;
+  font-family:Arial, sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.kutu{
+  background:#020617;
+  padding:30px;
+  border-radius:12px;
+  text-align:center;
+  box-shadow:0 0 20px rgba(0,0,0,0.5);
+}
+
+#zaman{
+  font-size:48px;
+  margin-bottom:20px;
+}
+
+button{
+  font-size:18px;
+  padding:10px 18px;
+  margin:5px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.baslat{background:#22c55e;}
+.dur{background:#eab308;}
+.sifirla{background:#ef4444;}
+
+button:hover{opacity:0.8;}
+</style>
+</head>
+
+<body>
+
+<div class="kutu">
+  <h2>Kronometre</h2>
+  <div id="zaman">00:00:00</div>
+  <button class="baslat" onclick="baslat()">Başlat</button>
+  <button class="dur" onclick="dur()">Dur</button>
+  <button class="sifirla" onclick="sifirla()">Sıfırla</button>
+</div>
+
+<script>
+let saniye = 0;
+let dakika = 0;
+let saat = 0;
+let calisiyor = false;
+let timer;
+
+function baslat(){
+  if(!calisiyor){
+    calisiyor = true;
+    timer = setInterval(() => {
+      saniye++;
+      if(saniye == 60){ saniye = 0; dakika++; }
+      if(dakika == 60){ dakika = 0; saat++; }
+
+      document.getElementById("zaman").innerText =
+        String(saat).padStart(2,"0") + ":" +
+        String(dakika).padStart(2,"0") + ":" +
+        String(saniye).padStart(2,"0");
+    }, 1000);
+  }
+}
+
+function dur(){
+  clearInterval(timer);
+  calisiyor = false;
+}
+
+function sifirla(){
+  dur();
+  saniye = dakika = saat = 0;
+  document.getElementById("zaman").innerText = "00:00:00";
+}
+</script>
+
+</body>
+</html>
